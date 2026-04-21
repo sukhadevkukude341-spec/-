@@ -1,0 +1,67 @@
+{
+  "entities": {
+    "Member": {
+      "title": "Member",
+      "description": "A member of the development organization.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "role": { "type": "string" },
+        "email": { "type": "string" },
+        "status": { "type": "string", "enum": ["active", "inactive"] }
+      },
+      "required": ["name", "role", "email", "status"]
+    },
+    "FormDefinition": {
+      "title": "Form Definition",
+      "description": "Definition of a form created by admins.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "fields": { "type": "array" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "fields", "createdAt"]
+    },
+    "FormSubmission": {
+      "title": "Form Submission",
+      "description": "A submission for a specific form.",
+      "type": "object",
+      "properties": {
+        "formId": { "type": "string" },
+        "submittedBy": { "type": "string" },
+        "submittedAt": { "type": "string", "format": "date-time" },
+        "data": { "type": "object" }
+      },
+      "required": ["formId", "submittedBy", "submittedAt", "data"]
+    },
+    "Stats": {
+      "title": "Statistics",
+      "description": "Global stats for the dashboard.",
+      "type": "object",
+      "properties": {
+        "totalFunds": { "type": "number" },
+        "memberCount": { "type": "number" }
+      }
+    }
+  },
+  "firestore": {
+    "/members/{memberId}": {
+      "schema": "Member",
+      "description": "Collection of members."
+    },
+    "/forms/{formId}": {
+      "schema": "FormDefinition",
+      "description": "Dynamic forms defined by admins."
+    },
+    "/submissions/{submissionId}": {
+      "schema": "FormSubmission",
+      "description": "Submissions for the forms."
+    },
+    "/settings/stats": {
+      "schema": "Stats",
+      "description": "Global stats for the dashboard."
+    }
+  }
+}
